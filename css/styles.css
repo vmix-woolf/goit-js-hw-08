@@ -16,3 +16,7 @@ ul {
     height: 200px;
     object-fit: cover;
 }
+
+.gallery-image:hover {
+    cursor: url('../hand-down.svg') 22 22, auto;
+}
