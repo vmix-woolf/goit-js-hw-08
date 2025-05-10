@@ -46,33 +46,40 @@ const images = [
     },
 ];
 
+const onGalleryClick = (event) => {
+    event.preventDefault();
+    const imgEl = event.target;
+
+    if (!imgEl.classList.contains('gallery-image')) {
+        return;
+    }
+
+    const largeImageUrl = imgEl.dataset.source;
+    console.log(largeImageUrl);
+}
+
 const gallery = document.querySelector('.gallery');
+let galleryHTML = '';
 
 for (let i = 0; i < images.length; i += 1) {
-    const li = document.createElement('li');
-    li.classList.add('gallery-item');
-
-    const a = document.createElement('a');
-    a.classList.add('gallery-link');
-    a.setAttribute('href', images[i].original);
-
-    const img = document.createElement('img');
-    img.classList.add('gallery-image');
-    // img.setAttribute('src', images[i].preview);
-    // img.setAttribute('data-source', images[i].original);
-    // img.setAttribute('alt', images[i].description);
-    // img.setAttribute('width', "360");
-    // img.setAttribute('height', "200");
-
     const { preview, original, description } = images[i];
 
-    img.src = preview;
-    img.dataset.source = original;
-    img.alt = description;
-    img.width = 360;
-    img.height = 200;
-
-    a.appendChild(img);
-    li.appendChild(a);
-    gallery.appendChild(li);
+    galleryHTML += `
+        <li class="gallery-item">
+            <a class="gallery-link" href="${original}">
+                <img
+                    class="gallery-image"
+                    src="${preview}"
+                    data-source="${original}"
+                    alt="${description}"
+                    width="360"
+                    height="200"
+                />
+            </a>
+        </li>
+    `;
 }
+
+gallery.innerHTML = galleryHTML;
+
+gallery.addEventListener('click', onGalleryClick);
